@@ -1,3 +1,12 @@
+WIP
+This is a front end application that connects to the Book-App-API. Technologies used include: React, Redux, React-Router and Materialize. 
+The app is far from finished, but all of the fundamental features are working. 
+TO DO:
+- split reducers;
+- add book reviews (this involves reworking the backend);
+- add integration with the Goodreads API.
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
