@@ -1,7 +1,7 @@
 WIP
 
 This is a front end application that connects to the Book-App-API. Technologies used include: React, Redux, React-Router and Materialize. 
-The app is far from finished, but all of the fundamental features are working. 
+The app is far from finished, but all of the basic features are working. 
 
 TO DO:
 - split reducers;
