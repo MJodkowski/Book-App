@@ -12,3 +12,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.card .collection {
+  border: none
+}
+nav {
+  padding: 0 10px;
+}
+
+.container form {
+  margin: 10% 0;
+}
