@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import * as actionTypes from '../store/actions/actions';
 import Flash from './Flash';
 
-class Login extends Component {
+class Register extends Component {
     state = {
         name: '',
-        password: ''
+        password: '',
+        email: '',
     }
     formChangeHandler = (e) => {
         this.setState({ [e.target.id]: e.target.value });
     }
     render() {
+
         if (this.props.loggedIn) {
             return <Redirect to='./dashboard' />;
         } else {
@@ -20,15 +22,14 @@ class Login extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col s6 offset-s3">
-                            <form onSubmit={e => {
+                            <form onSubmit={async e => {
                                 e.preventDefault();
-                                this.props.onLogin(this.state.name,
-                                    this.state.password);
+                                this.props.onRegister(this.state.name, this.state.password, this.state.email);
                             }}>
                                 <div className="input-field">
-                                    <input 
-                                        onChange={this.formChangeHandler}
+                                    <input onChange={this.formChangeHandler}
                                         required={true}
+                                        minLength={5}
                                         type='text'
                                         name='name'
                                         id='name'></input>
@@ -38,14 +39,24 @@ class Login extends Component {
                                     <input
                                         onChange={this.formChangeHandler}
                                         required={true}
+                                        minLength={6}
                                         type='password'
                                         name='password'
                                         id='password'></input>
                                     <label htmlFor='password'>Password</label>
                                 </div>
+                                <div className="input-field">
+                                    <input
+                                        onChange={this.formChangeHandler}
+                                        required={true}
+                                        type='email'
+                                        name='email'
+                                        id='email'></input>
+                                    <label htmlFor='email'>E-mail address</label>
+                                </div>
                                 <input className="btn" type='submit' value='submit'></input>
                             </form>
-                            <Flash message={this.props.loginError} />
+                            <Flash type={this.props.flashType} message={this.props.error} />
                         </div>
                     </div>
                 </div>
@@ -57,13 +68,15 @@ class Login extends Component {
 const mapStateToProps = state => {
     return {
         loggedIn: state.auth.loggedIn,
-        loginError: state.auth.loginError
+        error: state.auth.registerError,
+        flash: state.flash.flash,
+        flashType: state.flash.flashType
     }
 };
 const mapDispatchToProps = dispatch => {
     return {
-        onLogin: (name, password) => dispatch(actionTypes.logIn(name, password))
+        onRegister: (name, password, email) => dispatch(actionTypes.register(name, password, email))
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

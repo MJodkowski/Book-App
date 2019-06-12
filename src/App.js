@@ -6,6 +6,7 @@ import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css';
 
 import Login from './components/Login';
+import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
@@ -23,6 +24,7 @@ class App extends Component {
         <Switch>
           <ProtectedRoute loggedIn={this.props.loggedIn} path='/dashboard' component={Dashboard} />
           <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
           {this.props.loggedIn ? <Redirect from='/' exact to='/dashboard' /> : <Route path="/" exact component={Landing} />}
         </Switch>
       </div>
@@ -32,7 +34,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    loggedIn: state.loggedIn
+    loggedIn: state.auth.loggedIn
   }
 }
 

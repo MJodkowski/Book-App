@@ -4,6 +4,7 @@ import * as actionTypes from '../store/actions/actions';
 import sort from '../utils/sort';
 import Book from './Book';
 import Author from './Author';
+import Flash from './Flash';
 
 class dashBoard extends Component {
     state = {
@@ -57,6 +58,7 @@ class dashBoard extends Component {
     render() {
         return (
             <div className="container">
+                <Flash type={this.props.flashType} message="Registration successful" />
                 <form>
                     <div className="input-field">
                         <i className="material-icons prefix">search</i>
@@ -124,7 +126,9 @@ class dashBoard extends Component {
 
 const mapStateToProps = state => {
     return {
-        searchResults: state.searchResults
+        searchResults: state.search.searchResults,
+        flash: state.flash.flash,
+        flashType: state.flash.flashType
     }
 }
 const mapDispatchToProps = dispatch => {
