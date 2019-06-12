@@ -12,7 +12,9 @@ class Flash extends Component {
                 case 'error':
                     classes = 'chip white-text center-align error-message';
                     break;
+            default: ;
             }
+
         }
         return (
             <div className={classes}>

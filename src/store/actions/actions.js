@@ -10,6 +10,8 @@ export const STORE_RESULTS = 'STORE_RESULTS';
 export const ERASE_RESULTS = 'ERASE_RESULTS';
 export const DISPLAY_FLASH = 'DISPLAY_FLASH';
 export const HIDE_FLASH = 'HIDE_FLASH';
+export const DATA_FETCHING = 'DATA_FETCHING';
+export const DATA_FETCHED = 'DATA_FETCHED';
 
 export const logIn = (name, password) => {
     return async (dispatch) => {
@@ -70,9 +72,12 @@ export const authenticate = () => {
 export const search = (field, query) => {
     return async (dispatch) => {
         try {
+            dispatch({ type: DATA_FETCHING })
             const results = await HTTP.get(`http://localhost:3001/book/search?field=${field}&query=${query}`);
             dispatch({ type: STORE_RESULTS, payload: results });
+            dispatch({ type: DATA_FETCHED })
         } catch (err) {
+            dispatch({ type: DATA_FETCHED })
             console.log(err);
         }
     }

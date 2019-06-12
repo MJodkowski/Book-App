@@ -35,6 +35,8 @@ class dashBoard extends Component {
     generateCards = () => {
         if (!this.props.searchResults.length && this.state.wasSearched) {
             return <p>No results</p>
+        } else if (this.props.isFetching) {
+            return <p>Loading...</p>
         }
         this.props.searchResults.sort(sort(this.state.field));
         if (this.state.field === 'author') {
@@ -128,7 +130,8 @@ const mapStateToProps = state => {
     return {
         searchResults: state.search.searchResults,
         flash: state.flash.flash,
-        flashType: state.flash.flashType
+        flashType: state.flash.flashType,
+        isFetching: state.spinner.isFetching
     }
 }
 const mapDispatchToProps = dispatch => {
