@@ -1,30 +1,17 @@
 import * as actionTypes from '../actions/actions';
 
-export default (state = { loggedIn: false, registerError: null }, action) => {
+export default (state = { loggedIn: false, registerError: null, user: null }, action) => {
     switch (action.type) {
         case actionTypes.LOGIN:
-            if (action.payload) {
-                return {
-                    ...state,
-                    loggedIn: true
-                }
-            } else {
-                return {
-                    ...state,
-                    loggedIn: false
-                };
+            return {
+                ...state,
+                loggedIn: true,
+                user: action.payload
             }
         case actionTypes.LOGOUT:
-            if (action.payload) {
-                return {
-                    ...state,
-                    loggedIn: false
-                }
-            } else {
-                return {
-                    ...state,
-                    loggedIn: false
-                };
+            return {
+                ...state,
+                loggedIn: false
             }
         case actionTypes.LOGIN_FAILED:
             return {
@@ -35,7 +22,8 @@ export default (state = { loggedIn: false, registerError: null }, action) => {
             return {
                 ...state,
                 loggedIn: true,
-                registerError: null
+                registerError: null,
+                user: action.payload
             }
         case actionTypes.REGISTER_FAILED:
             return {
@@ -45,7 +33,8 @@ export default (state = { loggedIn: false, registerError: null }, action) => {
         case actionTypes.AUTHENTICATE:
             return {
                 ...state,
-                loggedIn: action.payload
+                loggedIn: action.payload.success,
+                user: action.payload.user
             };
         default:
             return state;

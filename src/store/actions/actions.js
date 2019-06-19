@@ -17,12 +17,12 @@ export const logIn = (name, password) => {
     return async (dispatch) => {
         try {
             const user = await HTTP.post('http://localhost:3001/user/login', { name, password });
-            dispatch({ type: LOGIN, payload: user });
+            dispatch({ type: LOGIN, payload: user.user.name });
         } catch (err) {
             dispatch({ type: LOGIN_FAILED, payload: err.message })
             dispatch({ type: DISPLAY_FLASH, payload: 'error' })
             setTimeout(() => {
-                dispatch({type: HIDE_FLASH})
+                dispatch({ type: HIDE_FLASH })
             }, 5000);
         }
     }
@@ -32,16 +32,16 @@ export const register = (name, password, email) => {
     return async (dispatch) => {
         try {
             const user = await HTTP.post('http://localhost:3001/user/register', { name, password, email });
-            dispatch({ type: REGISTER, payload: user });
+            dispatch({ type: REGISTER, payload: user.user.name });
             dispatch({ type: DISPLAY_FLASH, payload: 'success' })
             setTimeout(() => {
-                dispatch({type: HIDE_FLASH})
+                dispatch({ type: HIDE_FLASH })
             }, 5000);
         } catch (err) {
             dispatch({ type: REGISTER_FAILED, payload: err.message })
             dispatch({ type: DISPLAY_FLASH, payload: 'error' })
             setTimeout(() => {
-                dispatch({type: HIDE_FLASH})
+                dispatch({ type: HIDE_FLASH })
             }, 5000);
         }
     }
@@ -62,9 +62,21 @@ export const authenticate = () => {
     return async (dispatch) => {
         try {
             const user = await HTTP.post('http://localhost:3001/user/authenticate');
-            if (user) dispatch({ type: AUTHENTICATE, payload: true });
+            if (user) dispatch({
+                type: AUTHENTICATE,
+                payload: {
+                    user: user.user.name,
+                    success: true
+                }
+            });
         } catch (err) {
-            dispatch({ type: LOGIN, payload: false })
+            dispatch({
+                type: AUTHENTICATE,
+                payload: {
+                    user: null,
+                    success: false
+                }
+            })
         }
     }
 }
@@ -74,10 +86,21 @@ export const search = (field, query) => {
         try {
             dispatch({ type: DATA_FETCHING })
             const results = await HTTP.get(`http://localhost:3001/book/search?field=${field}&query=${query}`);
-            dispatch({ type: STORE_RESULTS, payload: results });
-            dispatch({ type: DATA_FETCHED })
+            !results.length ? dispatch({ type: STORE_RESULTS, payload: null }) 
+            : dispatch({ type: STORE_RESULTS, payload: results });
+            dispatch({ type: DATA_FETCHED });
         } catch (err) {
-            dispatch({ type: DATA_FETCHED })
+            dispatch({ type: DATA_FETCHED });
+            console.log(err);
+        }
+    }
+}
+
+export const postReview = (author, title, rating, contents) => {
+    return async (dispatch) => {
+        try {
+            await HTTP.post(`http://localhost:3001/book/review`, { author, title, rating, contents });
+        } catch (err) {
             console.log(err);
         }
     }

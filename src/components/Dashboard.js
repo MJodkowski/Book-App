@@ -8,7 +8,6 @@ import Flash from './Flash';
 
 class dashBoard extends Component {
     state = {
-        wasSearched: false,
         query: '',
         field: 'title'
     }
@@ -18,7 +17,6 @@ class dashBoard extends Component {
             this.setState({
                 [e.target[attribute]]: e.target.value,
                 query: '',
-                wasSearched: false
             });
         } else {
             this.setState({ [e.target[attribute]]: e.target.value });
@@ -27,13 +25,10 @@ class dashBoard extends Component {
     searchHandler = e => {
         if (!this.state.query) return;
         e.preventDefault();
-        if (!this.state.wasSearched) {
-            this.setState({ wasSearched: true });
-        }
         this.props.search(this.state.field, this.state.query);
     }
     generateCards = () => {
-        if (!this.props.searchResults.length && this.state.wasSearched) {
+        if (!this.props.searchResults) {
             return <p>No results</p>
         } else if (this.props.isFetching) {
             return <p>Loading...</p>
@@ -46,14 +41,24 @@ class dashBoard extends Component {
                 }
                 return authors;
             }, [])
-            return authorList.map(author => <Author key={author} author={author} books={null} />);
+            return authorList.map(author => {
+            const books = this.props.searchResults.reduce((books, book) => {
+                if (book.author === author) {
+                    books.push(book.title);
+                }
+                return books;
+            }, [])
+            return <Author key={author} author={author} books={books} />
+            });
         } else {
             return this.props.searchResults.map(book =>
                 <Book key={book.isbn}
                     title={book.title}
                     author={book.author}
                     isbn={book.isbn}
-                    year={book.year} />
+                    year={book.year} 
+                    reviews={book.reviews}
+                    />
             )
         }
     }
