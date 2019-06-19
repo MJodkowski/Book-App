@@ -1,20 +1,24 @@
 import React from 'react';
+import { Col, Card } from 'react-materialize';
+import { Link } from 'react-router-dom';
 
 const author = ({ author, books }) => (
-    <div className="col s12 l6">
-        <div className="card blue-grey darken-1">
-            <div className="card-content white-text">
-                <span className="card-title">{author}</span>
-                <ul className="collection black-text no-border">
-                    <li className="collection-item teal">{author}</li>
-                    {/* <li className="collection-item">{isbn}</li>
-                    <li className="collection-item">{year}</li> */}
-                </ul>
-                {books}
-            </div>
-            <div className="card-action">
-            </div>
-        </div>
-    </div>
+    <Col s={12} l={6}>
+        <Card
+            className="blue-grey darken-1 white-text"
+            title={author}
+        >
+            <ul>
+                {books.map(({ title, author, isbn, year, reviews }) =>
+                    <li key={isbn}>
+                        <Link to={{
+                            pathname: `/book/${title}`,
+                            state: { title, author, isbn, year, reviews }
+                        }}>{title}
+                        </Link>
+                    </li>)}
+            </ul>
+        </Card>
+    </Col >
 )
 export default author;

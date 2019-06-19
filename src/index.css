@@ -45,3 +45,7 @@ nav {
 .container form {
   margin: 10% 0;
 }
+
+.textarea-expanded {
+  height: 100px;
+}

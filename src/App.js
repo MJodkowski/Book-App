@@ -11,6 +11,7 @@ import Dashboard from './components/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
 import Landing from './components/Landing';
+import BookPage from './components/BookPage';
 
 class App extends Component {
   componentDidMount() {
@@ -23,6 +24,7 @@ class App extends Component {
         <Header />
         <Switch>
           <ProtectedRoute loggedIn={this.props.loggedIn} path='/dashboard' component={Dashboard} />
+          <ProtectedRoute loggedIn={this.props.loggedIn} path='/book' component={BookPage} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           {this.props.loggedIn ? <Redirect from='/' exact to='/dashboard' /> : <Route path="/" exact component={Landing} />}

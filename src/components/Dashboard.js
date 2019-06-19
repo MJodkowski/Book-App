@@ -44,7 +44,7 @@ class dashBoard extends Component {
             return authorList.map(author => {
             const books = this.props.searchResults.reduce((books, book) => {
                 if (book.author === author) {
-                    books.push(book.title);
+                    books.push(book);
                 }
                 return books;
             }, [])
