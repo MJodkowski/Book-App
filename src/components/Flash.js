@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Chip } from 'react-materialize';
 
 class Flash extends Component {
     render() {
-        let classes = 'chip white-text center-align transparent';
+        let classes = 'white-text center-align transparent';
         if (this.props.flash) {
             switch (this.props.flashType) {
                 case 'success':
-                    classes = 'chip white-text center-align success-message';
+                    classes = 'white-text center-align success-message';
                     break;
                 case 'error':
-                    classes = 'chip white-text center-align error-message';
+                    classes = 'white-text center-align error-message';
                     break;
             default: ;
             }
 
         }
         return (
-            <div className={classes}>
+            <Chip className={classes}>
                 {this.props.message}
-            </div>
+            </Chip>
         )
     }
 }

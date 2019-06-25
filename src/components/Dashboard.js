@@ -5,6 +5,7 @@ import sort from '../utils/sort';
 import Book from './Book';
 import Author from './Author';
 import Flash from './Flash';
+import { Container, TextInput, RadioGroup, Button } from 'react-materialize';
 
 class dashBoard extends Component {
     state = {
@@ -42,13 +43,13 @@ class dashBoard extends Component {
                 return authors;
             }, [])
             return authorList.map(author => {
-            const books = this.props.searchResults.reduce((books, book) => {
-                if (book.author === author) {
-                    books.push(book);
-                }
-                return books;
-            }, [])
-            return <Author key={author} author={author} books={books} />
+                const books = this.props.searchResults.reduce((books, book) => {
+                    if (book.author === author) {
+                        books.push(book);
+                    }
+                    return books;
+                }, [])
+                return <Author key={author} author={author} books={books} />
             });
         } else {
             return this.props.searchResults.map(book =>
@@ -56,77 +57,43 @@ class dashBoard extends Component {
                     title={book.title}
                     author={book.author}
                     isbn={book.isbn}
-                    year={book.year} 
+                    year={book.year}
                     reviews={book.reviews}
-                    />
+                />
             )
         }
     }
     render() {
         return (
-            <div className="container">
+            <Container>
                 <Flash type={this.props.flashType} message="Registration successful" />
-                <form>
-                    <div className="input-field">
-                        <i className="material-icons prefix">search</i>
-                        <input
-                            type={this.state.field === 'isbn' ? 'number' : 'text'}
-                            required
-                            id="query"
-                            onChange={e => this.formChangeHandler(e, 'id')}
-                            value={this.state.query} />
-                        <label htmlFor="query">Search</label>
-                    </div>
-                    <p>
-                        <label>
-                            <input
-                                type="radio"
-                                checked={this.state.field === 'title'}
-                                onChange={e =>
-                                    this.formChangeHandler(e, 'name')}
-                                name="field"
-                                id="title"
-                                value="title" />
-                            <span>Title</span>
-                        </label>
-                    </p>
-                    <p>
-                        <label>
-                            <input
-                                type="radio"
-                                checked={this.state.field === 'author'}
-                                onChange={e =>
-                                    this.formChangeHandler(e, 'name')}
-                                name="field"
-                                id="author"
-                                value="author" />
-                            <span>Author</span>
-                        </label>
-                    </p>
-                    <p>
-                        <label>
-                            <input
-                                type="radio"
-                                checked={this.state.field === 'isbn'}
-                                onChange={e => this.formChangeHandler(e, 'name')}
-                                name="field"
-                                id="isbn"
-                                value="isbn" />
-                            <span>ISBN</span>
-                        </label>
-                    </p>
-                    <input
-                        className="btn"
-                        type="submit"
-                        value="Search"
-                        onClick={e => this.searchHandler(e)} />
+                <form onSubmit={e => this.searchHandler(e)}>
+                    <TextInput
+                        icon="search"
+                        label="Search"
+                        type={this.state.field === 'isbn' ? 'number' : 'text'}
+                        required
+                        id="query"
+                        onChange={e => this.formChangeHandler(e, 'id')}
+                        value={this.state.query}
+                    />
+                    <RadioGroup
+                        name="field"
+                        label="Search by"
+                        value="title"
+                        radioClassNames="radio-button"
+                        options={[{ label: 'Title', value: 'title' }, { label: 'Author', value: 'author' }, { label: 'ISBN', value: 'isbn' }]}
+                        onChange={e =>
+                            this.formChangeHandler(e, "name")}
+                    />
+                    <Button type='submit' className="submit">Search</Button>
                 </form>
-                <div className="container">
+                <Container>
                     <div className="row">
                         {this.generateCards()}
                     </div>
-                </div>
-            </div>
+                </Container>
+            </Container>
         )
     }
 }

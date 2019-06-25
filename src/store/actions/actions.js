@@ -17,6 +17,7 @@ export const logIn = (name, password) => {
     return async (dispatch) => {
         try {
             const user = await HTTP.post('http://localhost:3001/user/login', { name, password });
+            dispatch({ type: HIDE_FLASH });
             dispatch({ type: LOGIN, payload: user.user.name });
         } catch (err) {
             dispatch({ type: LOGIN_FAILED, payload: err.message })

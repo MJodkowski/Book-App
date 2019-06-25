@@ -2,29 +2,30 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as actionTypes from '../store/actions/actions';
-
-import Aux from '../hoc/Aux';
+import { Navbar, NavItem } from 'react-materialize';
 
 const header = (props) => {
+
+    const loggedOutNavButtons = [
+        <Link to='/login' key={'1'}>Login</Link>,
+        <Link to='/register' key={'2'}>Register</Link>
+    ];
     return (
-        <nav>
-            <div className="nav-wrapper">
-                <Link to="/" className="brand-logo">
-                    <i className="material-icons">library_books</i>
-                    Book App
-                </Link>
-                <ul className="right">
-                    {props.loggedIn
-                        ? <li>
-                            <button className="btn" onClick={props.logOut}>Log out</button>
-                        </li>
-                        : <Aux>
-                            <li><Link to='/login'>Login</Link></li>
-                            <li><Link to='/register'>Register</Link></li>
-                        </Aux>}
-                </ul>
-            </div>
-        </nav>
+        <Navbar
+            brand={<Link to="/" className="brand-logo">
+                <i className="material-icons">library_books</i>
+                Book App
+                    </Link>
+            }
+            alignLinks="right"
+        >
+            {props.loggedIn
+                ? <NavItem onClick={props.logOut}>
+                    Log out
+                </NavItem>
+                :
+                loggedOutNavButtons}
+        </Navbar>
     );
 }
 const mapStateToProps = state => {

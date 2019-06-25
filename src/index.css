@@ -49,3 +49,16 @@ nav {
 .textarea-expanded {
   height: 100px;
 }
+
+.radio-button {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.submit {
+  margin-top: 20px;
+}
+
+.row {
+  margin-bottom: 0 !important;
+}

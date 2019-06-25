@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionTypes from '../store/actions/actions'
-import M from 'materialize-css';
+import { Row, Col, Textarea, Select, Button } from 'react-materialize';
 
 class BookPage extends Component {
     state = {
         addReview: true,
         editReview: false,
-        rating: 0,
+        rating: '',
         content: '',
         reviews: this.props.location.state.reviews,
         alreadyPosted: this.props.location.state.reviews.filter(review => review.author === this.props.user).length ? true : false
-    }
-    componentDidMount() {
-        M.AutoInit();
     }
     formChangeHandler = (e) => {
         this.setState({ [e.target.id]: e.target.value });
@@ -48,9 +45,8 @@ class BookPage extends Component {
                 <p>ISBN: {isbn}</p>
                 {reviews}
                 {!this.state.alreadyPosted || this.state.editReview ? (
-                    <div className="container">
-                    <div className="row">
-                        <div className="col s6 offset-s3">
+                    <Row>
+                        <Col s={6} offset={'s3'}>
                             <form onSubmit={e => {
                                 e.preventDefault();
                                 this.props.post(this.props.user, title, this.state.rating, this.state.contents);
@@ -64,39 +60,31 @@ class BookPage extends Component {
                                     alreadyPosted: true
                                 })
                             }}>
-                                <div className="input-field">
-                                    <textarea onChange={this.formChangeHandler}
-                                        required={true}
-                                        className='materialize-textarea textarea-expanded'
-                                        name='contents'
-                                        id='contents'
-                                    />
-                                    <label htmlFor='contents'>Your review</label>
-                                </div>
-                                <div className="input-field">
-                                    <select
-                                        id="rating"
-                                        name="rating"
-                                        onChange={this.formChangeHandler}
-                                        required={true}
-                                        defaultValue={'default'}
-                                    >
-                                        <option value="default" disabled>Choose a rating</option>
-                                        <option value="1">One star</option>
-                                        <option value="2">Two stars</option>
-                                        <option value="3">Three stars</option>
-                                        <option value="4">Four stars</option>
-                                        <option value="5">Five stars</option>
-                                    </select>
-                                    <label>Your rating</label>
-                                </div>
-                                <input className="btn" type='submit' value='submit'></input>
+                                <Textarea label="Your review"
+                                    name='contents'
+                                    id='contents'
+                                    s={12}
+                                    required
+                                />
+                                <Select
+                                    id="rating"
+                                    name="rating"
+                                    value={this.state.rating}
+                                    onChange={this.formChangeHandler}
+                                    s={12}
+                                >
+                                    <option value="" disabled>Choose a rating</option>
+                                    <option value="1">One star</option>
+                                    <option value="2">Two stars</option>
+                                    <option value="3">Three stars</option>
+                                    <option value="4">Four stars</option>
+                                    <option value="5">Five stars</option>
+                                </Select>
+                                <Button type='submit' className="submit">Submit</Button>
                             </form>
-                        </div>
-                    </div>
-                </div>
+                        </Col>
+                    </Row>
                 ) : null}
-            );
             </div>
         );
     }

@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionTypes from '../store/actions/actions';
 import Flash from './Flash';
+import { Container, Row, Col, TextInput, Button } from 'react-materialize';
 
 class Register extends Component {
     state = {
@@ -19,47 +20,51 @@ class Register extends Component {
             return <Redirect to='./dashboard' />;
         } else {
             return (
-                <div className="container">
-                    <div className="row">
-                        <div className="col s6 offset-s3">
-                            <form onSubmit={async e => {
+                <Container>
+                    <Row>
+                        <Col s={6} offset={'s3'}>
+                            <form onSubmit={e => {
                                 e.preventDefault();
-                                this.props.onRegister(this.state.name, this.state.password, this.state.email);
+                                this.props.onRegister(this.state.name,
+                                    this.state.password, this.state.email);
                             }}>
-                                <div className="input-field">
-                                    <input onChange={this.formChangeHandler}
-                                        required={true}
-                                        minLength={5}
-                                        type='text'
-                                        name='name'
-                                        id='name'></input>
-                                    <label htmlFor='name'>Username</label>
-                                </div>
-                                <div className="input-field">
-                                    <input
-                                        onChange={this.formChangeHandler}
-                                        required={true}
-                                        minLength={6}
-                                        type='password'
-                                        name='password'
-                                        id='password'></input>
-                                    <label htmlFor='password'>Password</label>
-                                </div>
-                                <div className="input-field">
-                                    <input
-                                        onChange={this.formChangeHandler}
-                                        required={true}
-                                        type='email'
-                                        name='email'
-                                        id='email'></input>
-                                    <label htmlFor='email'>E-mail address</label>
-                                </div>
-                                <input className="btn" type='submit' value='submit'></input>
+                                <TextInput
+                                    s={12}
+                                    label="Username"
+                                    minLength={5}
+                                    required
+                                    type='text'
+                                    id="name"
+                                    name="name"
+                                    onChange={this.formChangeHandler}
+                                    value={this.state.query}
+                                />
+                                <TextInput
+                                    s={12}
+                                    label="Password"
+                                    required
+                                    id="password"
+                                    name="password"
+                                    onChange={this.formChangeHandler}
+                                    value={this.state.query}
+                                />
+                                <TextInput
+                                    s={12}
+                                    email
+                                    validate
+                                    label="Email"
+                                    required
+                                    id="email"
+                                    name="email"
+                                    onChange={this.formChangeHandler}
+                                    value={this.state.query}
+                                />
+                                <Button type='submit' className="submit">Login</Button>
                             </form>
-                            <Flash type={this.props.flashType} message={this.props.error} />
-                        </div>
-                    </div>
-                </div>
+                            <Flash message={this.props.loginError} />
+                        </Col>
+                    </Row>
+                </Container>
             )
         }
     }
