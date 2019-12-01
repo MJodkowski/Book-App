@@ -53,7 +53,9 @@ class dashBoard extends Component {
             });
         } else {
             return this.props.searchResults.map(book =>
-                <Book key={book.isbn}
+                <Book 
+                    id={book._id}
+                    key={book.isbn}
                     title={book.title}
                     author={book.author}
                     isbn={book.isbn}

@@ -8,6 +8,6 @@ export default combineReducers({
     flash: flashReducer,
     auth: authReducer,
     search: searchReducer,
-    spinner: spinnerReducer
+    spinner: spinnerReducer,
 })
 

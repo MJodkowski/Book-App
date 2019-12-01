@@ -12,6 +12,7 @@ export const DISPLAY_FLASH = 'DISPLAY_FLASH';
 export const HIDE_FLASH = 'HIDE_FLASH';
 export const DATA_FETCHING = 'DATA_FETCHING';
 export const DATA_FETCHED = 'DATA_FETCHED';
+export const UPDATE_REVIEWS = 'UPDATE_REVIEWS';
 
 export const logIn = (name, password) => {
     return async (dispatch) => {
@@ -100,7 +101,9 @@ export const search = (field, query) => {
 export const postReview = (author, title, rating, contents) => {
     return async (dispatch) => {
         try {
-            await HTTP.post(`http://localhost:3001/book/review`, { author, title, rating, contents });
+            await HTTP.post(`http://localhost:3001/book/${title}/review`, { author, title, rating, contents });
+            const reviews = await HTTP.get(`http://localhost:3001/book/reviews?title=${title}`);
+            dispatch({ type: UPDATE_REVIEWS, payload: { reviews, title } });
         } catch (err) {
             console.log(err);
         }

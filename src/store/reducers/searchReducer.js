@@ -12,6 +12,18 @@ export default (state = { searchResults: [] }, action) => {
                 ...state,
                 searchResults: action.payload
             };
+        case actionTypes.UPDATE_REVIEWS:
+            return {
+                ...state,
+                searchResults: state.searchResults.map(book => {
+                    if (book.title === action.payload.title) { 
+                        book.reviews = [...action.payload.reviews];
+                        return book;
+                    } else {
+                        return book;
+                    }
+                })
+            }
         default:
             return state;
     }
