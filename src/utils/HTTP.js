@@ -13,7 +13,7 @@ class HTTP {
         const response = await fetch(url, {
             headers: {
                 "Content-Type": "application/json"
-            }, method: 'POST', body: JSON.stringify(data)
+            }, method: 'POST', body: JSON.stringify(data), credentials: 'include',
         });
         if (response.ok) {
             return await response.json();
