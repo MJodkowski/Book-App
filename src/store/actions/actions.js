@@ -110,6 +110,18 @@ export const postReview = (author, title, rating, contents) => {
     }
 }
 
+export const patchReview = (author, title, rating, contents, reviewId) => {
+    return async (dispatch) => {
+        try {
+            await HTTP.patch(`http://localhost:3001/book/${title}/reviews/${reviewId}`, { author, title, rating, contents, reviewId });
+            const reviews = await HTTP.get(`http://localhost:3001/book/reviews?title=${title}`);
+            dispatch({ type: UPDATE_REVIEWS, payload: { reviews, title } });
+        } catch (err) {
+            console.log(err);
+        }
+    }
+}
+
 export const eraseSearch = (payload) => {
     return {
         type: ERASE_RESULTS,
