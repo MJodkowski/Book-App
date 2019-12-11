@@ -19,9 +19,19 @@ class HTTP {
             return await response.json();
         } else throw new Error(`Request could not be completed: status ${response.status}`);
     }
+    static async patch(url, data) {
+        const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json"
+            }, method: 'PATCH', body: JSON.stringify(data), credentials: 'include',
+        });
+        if (response.ok) {
+            return await response.json();
+        } else throw new Error(`Request could not be completed: status ${response.status}`);
+    }
     static async delete(url, data) {
         const results = await fetch(url + data, {
-            method: 'DELETE'
+            method: 'DELETE', credentials: 'include',
         });
         if (results.ok) {
             return "Data successfully deleted";
