@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-export default ({ author, rating, contents, editable, clickHandler}) => {
+export default ({ author, rating, contents, editable, clickHandler }) => {
   return (
     <div>
       <ul>
@@ -10,5 +10,5 @@ export default ({ author, rating, contents, editable, clickHandler}) => {
       </ul>
       {editable && <button onClick={clickHandler}>Edit</button>}
     </div>
-  )
-}
+  );
+};
