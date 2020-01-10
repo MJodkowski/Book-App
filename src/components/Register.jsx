@@ -64,7 +64,7 @@ class Register extends Component {
                   value={this.state.query}
                 />
                 <Button type="submit" className="submit">
-                  Login
+                  Register
                 </Button>
               </form>
               <Flash message={this.props.loginError} />
