@@ -14,12 +14,13 @@ class BookPage extends Component {
   };
   onReviewSubmit = (e, user, title, rating, content, reviewId) => {
     e.preventDefault();
-    this.setState({
-      alreadyPosted: true
-    });
-    this.state.editReview
-      ? this.props.patch(user, title, rating, content, reviewId)
-      : this.props.post(user, title, rating, content);
+    if (this.state.editReview) {
+      this.props.patch(user, title, rating, content, reviewId);
+      this.setState({ editReview: false });
+    } else {
+      this.setState({ alreadyPosted: true });
+      this.props.post(user, title, rating, content);
+    }
   };
   render() {
     const { title, author, year, isbn } = this.props.location.state;
