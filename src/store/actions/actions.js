@@ -1,31 +1,31 @@
-import HTTP from "../../utils/HTTP";
+import HTTP from '../../utils/HTTP';
 
-export const LOGIN = "LOGIN";
-export const LOGOUT = "LOGOUT";
-export const LOGIN_FAILED = "LOGIN_FAILED";
-export const AUTHENTICATE = "AUTHENTICATE";
-export const REGISTER = "REGISTER";
-export const REGISTER_FAILED = "REGISTER_FAILED";
-export const STORE_RESULTS = "STORE_RESULTS";
-export const ERASE_RESULTS = "ERASE_RESULTS";
-export const DISPLAY_FLASH = "DISPLAY_FLASH";
-export const HIDE_FLASH = "HIDE_FLASH";
-export const DATA_FETCHING = "DATA_FETCHING";
-export const DATA_FETCHED = "DATA_FETCHED";
-export const UPDATE_REVIEWS = "UPDATE_REVIEWS";
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const LOGIN_FAILED = 'LOGIN_FAILED';
+export const AUTHENTICATE = 'AUTHENTICATE';
+export const REGISTER = 'REGISTER';
+export const REGISTER_FAILED = 'REGISTER_FAILED';
+export const STORE_RESULTS = 'STORE_RESULTS';
+export const ERASE_RESULTS = 'ERASE_RESULTS';
+export const DISPLAY_FLASH = 'DISPLAY_FLASH';
+export const HIDE_FLASH = 'HIDE_FLASH';
+export const DATA_FETCHING = 'DATA_FETCHING';
+export const DATA_FETCHED = 'DATA_FETCHED';
+export const UPDATE_REVIEWS = 'UPDATE_REVIEWS';
 
 export const logIn = (name, password) => {
   return async dispatch => {
     try {
-      const user = await HTTP.post("http://localhost:3001/user/login", {
+      const user = await HTTP.post('http://localhost:3001/loginUser', {
         name,
-        password
+        password,
       });
       dispatch({ type: HIDE_FLASH });
       dispatch({ type: LOGIN, payload: user.user.name });
     } catch (err) {
       dispatch({ type: LOGIN_FAILED, payload: err.message });
-      dispatch({ type: DISPLAY_FLASH, payload: "error" });
+      dispatch({ type: DISPLAY_FLASH, payload: 'error' });
       setTimeout(() => {
         dispatch({ type: HIDE_FLASH });
       }, 5000);
@@ -36,19 +36,19 @@ export const logIn = (name, password) => {
 export const register = (name, password, email) => {
   return async dispatch => {
     try {
-      const user = await HTTP.post("http://localhost:3001/user/register", {
+      const user = await HTTP.post('http://localhost:3001/registerUser', {
         name,
         password,
-        email
+        email,
       });
       dispatch({ type: REGISTER, payload: user.user.name });
-      dispatch({ type: DISPLAY_FLASH, payload: "success" });
+      dispatch({ type: DISPLAY_FLASH, payload: 'success' });
       setTimeout(() => {
         dispatch({ type: HIDE_FLASH });
       }, 5000);
     } catch (err) {
       dispatch({ type: REGISTER_FAILED, payload: err.message });
-      dispatch({ type: DISPLAY_FLASH, payload: "error" });
+      dispatch({ type: DISPLAY_FLASH, payload: 'error' });
       setTimeout(() => {
         dispatch({ type: HIDE_FLASH });
       }, 5000);
@@ -59,7 +59,7 @@ export const register = (name, password, email) => {
 export const logOut = () => {
   return async dispatch => {
     try {
-      await HTTP.post("http://localhost:3001/user/logout");
+      await HTTP.post('http://localhost:3001/logoutCurrentUserSession');
       dispatch({ type: LOGOUT, payload: true });
     } catch (err) {
       dispatch({ type: LOGOUT, payload: false });
@@ -70,22 +70,22 @@ export const logOut = () => {
 export const authenticate = () => {
   return async dispatch => {
     try {
-      const user = await HTTP.post("http://localhost:3001/user/authenticate");
+      const user = await HTTP.post('http://localhost:3001/authenticateUser');
       if (user)
         dispatch({
           type: AUTHENTICATE,
           payload: {
             user: user.user.name,
-            success: true
-          }
+            success: true,
+          },
         });
     } catch (err) {
       dispatch({
         type: AUTHENTICATE,
         payload: {
           user: null,
-          success: false
-        }
+          success: false,
+        },
       });
     }
   };
@@ -96,7 +96,7 @@ export const search = (field, query) => {
     try {
       dispatch({ type: DATA_FETCHING });
       const results = await HTTP.get(
-        `http://localhost:3001/book/search?field=${field}&query=${query}`
+        `http://localhost:3001/getBookList?field=${field}&query=${query}`
       );
       !results.length
         ? dispatch({ type: STORE_RESULTS, payload: null })
@@ -112,14 +112,14 @@ export const search = (field, query) => {
 export const postReview = (author, title, rating, contents) => {
   return async dispatch => {
     try {
-      await HTTP.post(`http://localhost:3001/book/${title}/review`, {
+      await HTTP.post(`http://localhost:3001/postBookReview`, {
         author,
         title,
         rating,
-        contents
+        contents,
       });
       const reviews = await HTTP.get(
-        `http://localhost:3001/book/reviews?title=${title}`
+        `http://localhost:3001/getBookReviews?title=${title}`
       );
       dispatch({ type: UPDATE_REVIEWS, payload: { reviews, title } });
     } catch (err) {
@@ -131,12 +131,15 @@ export const postReview = (author, title, rating, contents) => {
 export const patchReview = (author, title, rating, contents, reviewId) => {
   return async dispatch => {
     try {
-      await HTTP.patch(
-        `http://localhost:3001/book/${title}/reviews/${reviewId}`,
-        { author, title, rating, contents, reviewId }
-      );
+      await HTTP.patch(`http://localhost:3001/patchBookReview`, {
+        author,
+        title,
+        rating,
+        contents,
+        reviewId,
+      });
       const reviews = await HTTP.get(
-        `http://localhost:3001/book/reviews?title=${title}`
+        `http://localhost:3001/getBookReviews?title=${title}`
       );
       dispatch({ type: UPDATE_REVIEWS, payload: { reviews, title } });
     } catch (err) {
@@ -148,20 +151,20 @@ export const patchReview = (author, title, rating, contents, reviewId) => {
 export const eraseSearch = payload => {
   return {
     type: ERASE_RESULTS,
-    payload: payload
+    payload: payload,
   };
 };
 
 export const displayFlash = () => {
   return {
     type: DISPLAY_FLASH,
-    payload: true
+    payload: true,
   };
 };
 
 export const hideFlash = () => {
   return {
     type: DISPLAY_FLASH,
-    payload: false
+    payload: false,
   };
 };
