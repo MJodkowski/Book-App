@@ -27,6 +27,7 @@ class BookPage extends Component {
     const { editReview, reviewId, alreadyPosted } = this.state;
     const reviews = this.props.reviews.map(review => (
       <Review
+        key={review.user}
         user={review.user}
         author={review.author}
         rating={review.rating}
