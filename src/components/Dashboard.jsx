@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actionTypes from "../store/actions/actions";
+import { search, eraseSearch } from "../store/actions";
 import sort from "../utils/sort";
 import Book from "./Book";
 import Author from "./Author";
@@ -113,8 +113,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    search: (field, query) => dispatch(actionTypes.search(field, query)),
-    erase: () => dispatch(actionTypes.eraseSearch([]))
+    search: (field, query) => dispatch(search(field, query)),
+    erase: () => dispatch(eraseSearch([]))
   };
 };
 

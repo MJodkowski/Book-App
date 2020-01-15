@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/actions";
+import * as actionTypes from "../actions/types";
 
 export default (state = { isFetching: false }, action) => {
   switch (action.type) {
