@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actionTypes from "../store/actions/actions";
-import ReviewForm from "./ReviewForm";
-import Review from "./Review";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { postReview, patchReview } from '../store/actions';
+import ReviewForm from './ReviewForm';
+import Review from './Review';
 
 class BookPage extends Component {
   state = {
@@ -10,7 +10,7 @@ class BookPage extends Component {
     reviewId: null,
     alreadyPosted: !!this.props.reviews.filter(
       review => review.author === this.props.user
-    ).length
+    ).length,
   };
   onReviewSubmit = (e, user, title, rating, content, reviewId) => {
     e.preventDefault();
@@ -62,18 +62,16 @@ const mapStateToProps = (state, ownProps) => {
     user: state.auth.user,
     reviews: state.search.searchResults.find(
       elem => elem.title === ownProps.location.state.title
-    ).reviews
+    ).reviews,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     post: (author, title, rating, contents) =>
-      dispatch(actionTypes.postReview(author, title, rating, contents)),
+      dispatch(postReview(author, title, rating, contents)),
     patch: (author, title, rating, contents, reviewId) =>
-      dispatch(
-        actionTypes.patchReview(author, title, rating, contents, reviewId)
-      )
+      dispatch(patchReview(author, title, rating, contents, reviewId)),
   };
 };
 

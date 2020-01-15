@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import * as actionTypes from "../store/actions/actions";
+import { logIn } from "../store/actions";
 import Flash from "./Flash";
 import { Container, Row, Col, TextInput, Button } from "react-materialize";
 
@@ -66,7 +66,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onLogin: (name, password) => dispatch(actionTypes.logIn(name, password))
+    onLogin: (name, password) => dispatch(logIn(name, password))
   };
 };
 

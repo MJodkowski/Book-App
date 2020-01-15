@@ -5,7 +5,9 @@ import { Chip } from "react-materialize";
 class Flash extends Component {
   render() {
     let classes = "white-text center-align transparent";
-    if (this.props.flash) {
+    if (!this.props.flash) {
+      return null;
+    } else {
       switch (this.props.flashType) {
         case "success":
           classes = "white-text center-align success-message";

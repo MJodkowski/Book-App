@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import * as actionTypes from "../store/actions/actions";
-import Flash from "./Flash";
-import { Container, Row, Col, TextInput, Button } from "react-materialize";
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { register } from '../store/actions';
+import Flash from './Flash';
+import { Container, Row, Col, TextInput, Button } from 'react-materialize';
 
 class Register extends Component {
   state = {
-    name: "",
-    password: "",
-    email: ""
+    name: '',
+    password: '',
+    email: '',
   };
   formChangeHandler = e => {
     this.setState({ [e.target.id]: e.target.value });
@@ -21,7 +21,7 @@ class Register extends Component {
       return (
         <Container>
           <Row>
-            <Col s={6} offset={"s3"}>
+            <Col s={6} offset={'s3'}>
               <form
                 onSubmit={e => {
                   e.preventDefault();
@@ -67,7 +67,7 @@ class Register extends Component {
                   Register
                 </Button>
               </form>
-              <Flash message={this.props.loginError} />
+              <Flash message={this.props.registerError} />
             </Col>
           </Row>
         </Container>
@@ -79,15 +79,15 @@ class Register extends Component {
 const mapStateToProps = state => {
   return {
     loggedIn: state.auth.loggedIn,
-    error: state.auth.registerError,
+    registerError: state.auth.registerError,
     flash: state.flash.flash,
-    flashType: state.flash.flashType
+    flashType: state.flash.flashType,
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     onRegister: (name, password, email) =>
-      dispatch(actionTypes.register(name, password, email))
+      dispatch(register(name, password, email)),
   };
 };
 

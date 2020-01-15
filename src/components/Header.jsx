@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import * as actionTypes from "../store/actions/actions";
+import { logOut } from "../store/actions";
 import { Navbar, NavItem } from "react-materialize";
 
 const header = props => {
@@ -38,7 +38,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    logOut: () => dispatch(actionTypes.logOut())
+    logOut: () => dispatch(logOut())
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(header);
