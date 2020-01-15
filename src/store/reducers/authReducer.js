@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/actions";
+import * as actionTypes from "../actions/types";
 
 export default (
   state = { loggedIn: false, registerError: null, user: null },

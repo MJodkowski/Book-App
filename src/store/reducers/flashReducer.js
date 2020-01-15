@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/actions";
+import * as actionTypes from "../actions/types";
 
 export default (state = { flash: null, flashType: null }, action) => {
   switch (action.type) {
