@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Col, Card, Collection, CollectionItem } from "react-materialize";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Col, Card, Collection, CollectionItem } from 'react-materialize';
 
 const book = ({ id, title, author, isbn, year, reviews }) => (
   <Col s={12} l={6}>
@@ -9,13 +9,14 @@ const book = ({ id, title, author, isbn, year, reviews }) => (
       className="blue-grey darken-1 white-text"
       actions={[
         <Link
+          key={isbn}
           to={{
             pathname: `/book/${title}`,
-            state: { id, title, author, isbn, year, reviews }
+            state: { id, title, author, isbn, year, reviews },
           }}
         >
           Expand
-        </Link>
+        </Link>,
       ]}
     >
       <Collection className="black-text no-border white-text">
