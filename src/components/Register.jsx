@@ -67,7 +67,7 @@ class Register extends Component {
                   Register
                 </Button>
               </form>
-              <Flash message={this.props.registerError} />
+              <Flash />
             </Col>
           </Row>
         </Container>
@@ -79,7 +79,7 @@ class Register extends Component {
 const mapStateToProps = state => {
   return {
     loggedIn: state.auth.loggedIn,
-    registerError: state.auth.registerError,
+    registerError: state.errors.registerError,
     flash: state.flash.flash,
     flashType: state.flash.flashType,
   };

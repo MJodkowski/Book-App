@@ -49,7 +49,7 @@ class Login extends Component {
                   Login
                 </Button>
               </form>
-              <Flash message={this.props.loginError} />
+              <Flash />
             </Col>
           </Row>
         </Container>
@@ -61,7 +61,7 @@ class Login extends Component {
 const mapStateToProps = state => {
   return {
     loggedIn: state.auth.loggedIn,
-    loginError: state.auth.loginError
+    loginError: state.errors.loginError
   };
 };
 const mapDispatchToProps = dispatch => {

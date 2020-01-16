@@ -16,11 +16,11 @@ export default (
         ...state,
         loggedIn: false
       };
-    case actionTypes.LOGIN_FAILED:
-      return {
-        ...state,
-        loginError: action.payload
-      };
+    // case actionTypes.LOGIN_FAILED:
+    //   return {
+    //     ...state,
+    //     loginError: action.payload
+    //   };
     case actionTypes.REGISTER:
       return {
         ...state,
@@ -28,11 +28,11 @@ export default (
         registerError: null,
         user: action.payload
       };
-    case actionTypes.REGISTER_FAILED:
-      return {
-        ...state,
-        registerError: action.payload
-      };
+    // case actionTypes.REGISTER_FAILED:
+    //   return {
+    //     ...state,
+    //     registerError: action.payload
+    //   };
     case actionTypes.AUTHENTICATE:
       return {
         ...state,
