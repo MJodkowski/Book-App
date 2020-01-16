@@ -9,9 +9,9 @@ import postBookReview from '../../api/postBookReview';
 import patchBookReview from '../../api/patchBookReview';
 import { flashMessages } from '../../utils/constants';
 
-export const logIn = (name, password) => {
+export const logIn = (username, password) => {
   return async dispatch => {
-    const loginResponse = await loginUser(name, password);
+    const loginResponse = await loginUser(username, password);
     if (!loginResponse.success) {
       dispatch({ type: actionTypes.LOGIN_FAILED, payload: loginResponse.error });
       return showFlash(dispatch, 'error', loginResponse.error);

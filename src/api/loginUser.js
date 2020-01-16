@@ -7,7 +7,7 @@ const loginUser = async (name, password) => {
       name,
       password,
     });
-    const { username } = response;
+    const { user: { name: username } } = response;
     return {
       success: true,
       username,
