@@ -4,7 +4,7 @@ This is a front end application that connects to the Book-App-API. Technologies 
 The app is far from finished, but all of the basic features are working. 
 
 TO DO:
-- add book reviews (this involves reworking the backend);
+- tidy up UI;
 - add integration with the Goodreads API.
 
 
