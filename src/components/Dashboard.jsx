@@ -68,7 +68,7 @@ class dashBoard extends Component {
   render() {
     return (
       <Container>
-        <Flash type={this.props.flashType} message="Registration successful" />
+        <Flash />
         <form onSubmit={e => this.searchHandler(e)}>
           <TextInput
             icon="search"
