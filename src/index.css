@@ -62,3 +62,9 @@ nav {
 .row {
   margin-bottom: 0 !important;
 }
+
+@media (min-width: 993px) { 
+  .nav-wrapper {
+    padding: 0 15%;
+  }  
+}

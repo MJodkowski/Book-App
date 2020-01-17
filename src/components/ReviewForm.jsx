@@ -23,7 +23,7 @@ class ReviewForm extends Component {
     return (
       <Container>
         <Row>
-          <Col s={6} offset={"s3"}>
+          <Col s={10} m={6} offset={"m3"}>
             <form
               onSubmit={e =>
                 onReviewSubmit(e, user, title, rating, content, reviewId)

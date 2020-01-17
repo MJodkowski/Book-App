@@ -4,6 +4,7 @@ import { postReview, patchReview } from '../store/actions';
 import ReviewForm from './ReviewForm';
 import Review from './Review';
 import Flash from './Flash';
+import { Divider, Col, Row } from 'react-materialize';
 
 class BookPage extends Component {
   state = {
@@ -42,12 +43,30 @@ class BookPage extends Component {
       />
     ));
     return (
-      <div>
-        <p>Title: {title}</p>
-        <p>Author: {author}</p>
-        <p>Year: {year}</p>
-        <p>ISBN: {isbn}</p>
-        {reviews}
+      <>
+        <Row>
+          <Col s={10} m={8} offset={'m2 s1'} style={{ fontSize: '20px' }}>
+            <p style={{ fontWeight: 'bold' }}>{title}</p>
+            <p>by {author}</p>
+            <p>Year: {year}</p>
+            <p>ISBN: {isbn}</p>
+            <h2
+              style={{
+                marginBottom: '10px',
+                fontWeight: 'bold',
+                fontSize: '15px',
+              }}
+            >
+              User Reviews
+            </h2>
+            <Divider />
+          </Col>
+        </Row>
+        <Row>
+          <Col s={10} m={8} offset={'m2 s1'}>
+            {reviews}
+          </Col>
+        </Row>
         <Flash />
         {(!alreadyPosted || editReview) && (
           <ReviewForm
@@ -56,7 +75,7 @@ class BookPage extends Component {
             onReviewSubmit={this.onReviewSubmit}
           />
         )}
-      </div>
+      </>
     );
   }
 }

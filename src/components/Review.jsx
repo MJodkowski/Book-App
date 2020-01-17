@@ -1,14 +1,19 @@
-import React from "react";
+import React from 'react';
+import { Card, Row, Col, Button, Divider } from 'react-materialize';
 
 export default ({ author, rating, contents, editable, clickHandler }) => {
   return (
-    <div>
-      <ul>
-        <li>{author}</li>
-        <li>{rating}</li>
-        <li>{contents}</li>
-      </ul>
-      {editable && <button onClick={clickHandler}>Edit</button>}
-    </div>
+    <Row>
+      <Col s={12}>
+        <Card style={{ marginTop: '20px' }}>
+          <ul>
+            <li style={{ marginBottom: '10px' }}>{author} rated it {rating} out of 5</li>
+            <Divider />
+            <li style={{ marginTop: '15px' }}>{contents}</li>
+          </ul>
+          {editable && <Button onClick={clickHandler}>Edit</Button>}
+        </Card>
+      </Col>
+    </Row>
   );
 };
