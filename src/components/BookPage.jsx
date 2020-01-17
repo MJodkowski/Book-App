@@ -14,14 +14,14 @@ class BookPage extends Component {
       review => review.author === this.props.user
     ).length,
   };
-  onReviewSubmit = (e, user, title, rating, content, reviewId) => {
+  onReviewSubmit = async (e, user, title, rating, content, reviewId) => {
     e.preventDefault();
     if (this.state.editReview) {
-      const result = this.props.patch(user, title, rating, content, reviewId);
+      const result = await this.props.patch(user, title, rating, content, reviewId);
       if (!result.success) return;
       this.setState({ editReview: false });
     } else {
-      const result = this.props.post(user, title, rating, content);
+      const result = await this.props.post(user, title, rating, content);
       if (!result.success) return;
       this.setState({ alreadyPosted: true });
     }

@@ -3,7 +3,7 @@ import HTTP from '../utils/HTTP';
 
 const patchBookReview = async (author, title, rating, contents, reviewId) => {
   try {
-    const response = await HTTP.patch(`${SERVER_URL}/patchaBookReview`, {
+    const response = await HTTP.patch(`${SERVER_URL}/patchBookReview`, {
       author,
       title,
       rating,
