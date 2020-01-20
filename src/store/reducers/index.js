@@ -4,6 +4,7 @@ import authReducer from './authReducer';
 import searchReducer from './searchReducer';
 import spinnerReducer from './spinnerReducer';
 import errorReducer from './errorReducer';
+import paginationReducer from './paginationReducer';
 
 export default combineReducers({
   flash: flashReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   search: searchReducer,
   spinner: spinnerReducer,
   errors: errorReducer,
+  pagination: paginationReducer,
 });

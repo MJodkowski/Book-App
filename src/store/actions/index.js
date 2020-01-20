@@ -5,6 +5,7 @@ import registerUser from '../../api/registerUser';
 import logOutCurrentUserSession from '../../api/logOutCurrentUserSession';
 import authenticateUser from '../../api/authenticateUser';
 import fetchBookList from '../../api/fetchBookList';
+import fetchAuthorList from '../../api/fetchAuthorList'
 import postBookReview from '../../api/postBookReview';
 import patchBookReview from '../../api/patchBookReview';
 import { flashMessages } from '../../utils/constants';
@@ -13,7 +14,10 @@ export const logIn = (username, password) => {
   return async dispatch => {
     const loginResponse = await loginUser(username, password);
     if (!loginResponse.success) {
-      dispatch({ type: actionTypes.LOGIN_FAILED, payload: loginResponse.error });
+      dispatch({
+        type: actionTypes.LOGIN_FAILED,
+        payload: loginResponse.error,
+      });
       return showFlash(dispatch, 'error', loginResponse.error);
     }
     dispatch({ type: actionTypes.HIDE_FLASH });
@@ -25,10 +29,16 @@ export const register = (name, password, email) => {
   return async dispatch => {
     const registerResponse = await registerUser(name, password, email);
     if (!registerResponse.success) {
-      dispatch({ type: actionTypes.REGISTER_FAILED, payload: registerResponse.error });
+      dispatch({
+        type: actionTypes.REGISTER_FAILED,
+        payload: registerResponse.error,
+      });
       return showFlash(dispatch, 'error', registerResponse.error);
     }
-    dispatch({ type: actionTypes.REGISTER, payload: registerResponse.username });
+    dispatch({
+      type: actionTypes.REGISTER,
+      payload: registerResponse.username,
+    });
     showFlash(dispatch, 'success', flashMessages.onSuccessfulRegister);
   };
 };
@@ -65,19 +75,37 @@ export const authenticate = () => {
   };
 };
 
-export const search = (field, query) => {
+export const search = (field, query, currentPage, perPage) => {
   return async dispatch => {
     dispatch({ type: actionTypes.DATA_FETCHING });
-    const searchResponse = await fetchBookList(field, query);
+    let searchResponse = null;
+    if (field === 'title' || field === 'isbn') {
+      searchResponse = await fetchBookList(field, query, currentPage, perPage);  
+    } else {
+      searchResponse = await fetchAuthorList(query, currentPage, perPage);
+    }
     if (!searchResponse.success) {
-      dispatch({ type: actionTypes.SEARCH_FAILED, payload: searchResponse.error });
+      dispatch({
+        type: actionTypes.SEARCH_FAILED,
+        payload: searchResponse.error,
+      });
       showFlash(dispatch, 'error', searchResponse.error);
       return dispatch({ type: actionTypes.DATA_FETCHED });
     }
-    !searchResponse.results.length
-      ? dispatch({ type: actionTypes.STORE_RESULTS, payload: null })
-      : dispatch({ type: actionTypes.STORE_RESULTS, payload: searchResponse.results });
-    dispatch({ type: actionTypes.DATA_FETCHED });
+    if (!searchResponse.results.length) {
+      dispatch({ type: actionTypes.STORE_RESULTS, payload: null });
+    } else {
+      console.log(searchResponse);
+      dispatch({
+        type: actionTypes.STORE_RESULTS,
+        payload: searchResponse.results,
+      });
+      dispatch({
+        type: actionTypes.SET_NUMBER_OF_PAGES,
+        payload: searchResponse.resultCount / 10,
+      });
+      dispatch({ type: actionTypes.DATA_FETCHED });
+    }
   };
 };
 
@@ -90,7 +118,10 @@ export const postReview = (author, title, rating, contents) => {
       contents
     );
     if (!postBookReviewResponse.success) {
-      dispatch({ type: actionTypes.POST_REVIEW_FAILED, payload: postBookReviewResponse.error });
+      dispatch({
+        type: actionTypes.POST_REVIEW_FAILED,
+        payload: postBookReviewResponse.error,
+      });
       return showFlash(dispatch, 'error', postBookReviewResponse.error);
     }
     dispatch({
@@ -110,15 +141,18 @@ export const patchReview = (author, title, rating, contents, reviewId) => {
       reviewId
     );
     if (!patchBookReviewResponse.success) {
-      dispatch({ type: actionTypes.PATCH_REVIEW_FAILED, payload: patchBookReviewResponse.error });
+      dispatch({
+        type: actionTypes.PATCH_REVIEW_FAILED,
+        payload: patchBookReviewResponse.error,
+      });
       showFlash(dispatch, 'error', patchBookReviewResponse.error);
-      return { success: false }
+      return { success: false };
     }
     dispatch({
       type: actionTypes.UPDATE_REVIEWS,
       payload: { reviews: patchBookReviewResponse.book.reviews, title },
     });
-    return { success: true }
+    return { success: true };
   };
 };
 
@@ -140,5 +174,19 @@ export const hideFlash = () => {
   return {
     type: actionTypes.DISPLAY_FLASH,
     payload: false,
+  };
+};
+
+export const changePage = page => {
+  return {
+    type: actionTypes.CHANGE_PAGE,
+    payload: page,
+  };
+};
+
+export const setNumberOfPages = numberOfPages => {
+  return {
+    type: actionTypes.SET_NUMBER_OF_PAGES,
+    payload: numberOfPages,
   };
 };

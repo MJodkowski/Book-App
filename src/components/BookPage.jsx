@@ -64,9 +64,11 @@ class BookPage extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.auth.user,
-    reviews: state.search.searchResults.find(
-      elem => elem.title === ownProps.location.state.title
-    ).reviews,
+    reviews:
+      ownProps.location.state.reviews ||
+      state.search.searchResults.find(
+        elem => elem.title === ownProps.location.state.title
+      ).reviews,
   };
 };
 
