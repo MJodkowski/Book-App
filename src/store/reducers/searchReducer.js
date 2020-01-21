@@ -1,16 +1,16 @@
-import * as actionTypes from "../actions/types";
+import * as actionTypes from '../actions/types';
 
 export default (state = { searchResults: [] }, action) => {
   switch (action.type) {
     case actionTypes.STORE_RESULTS:
       return {
         ...state,
-        searchResults: action.payload
+        searchResults: action.payload,
       };
     case actionTypes.ERASE_RESULTS:
       return {
         ...state,
-        searchResults: action.payload
+        searchResults: action.payload,
       };
     case actionTypes.UPDATE_REVIEWS:
       return {
@@ -19,10 +19,9 @@ export default (state = { searchResults: [] }, action) => {
           if (book.title === action.payload.title) {
             book.reviews = [...action.payload.reviews];
             return book;
-          } else {
-            return book;
           }
-        })
+          return book;
+        }),
       };
     default:
       return state;

@@ -42,17 +42,17 @@ class dashBoard extends Component {
     );
   };
   generateCards = () => {
-    if (!this.props.searchResults) {
-      return <p>No results</p>;
-    } else if (this.props.isFetching) {
-      return <p>Loading...</p>;
-    }
-    if (this.state.field === 'author') {
-      return this.props.searchResults.map(author => {
-        return <Author key={author.name} author={author.name} books={author.books}/>;
-      })
-    } else {
-      return this.props.searchResults.map(book => (
+    if (!this.props.searchResults) return <p>No results</p>;
+    if (this.props.isFetching) return <p>Loading...</p>;
+    if (this.state.field === 'author')
+      return this.props.searchResults.map(author => (
+        <Author 
+            key={author.name} 
+            author={author.name} 
+            books={author.books}
+          />
+      ));
+    return this.props.searchResults.map(book => (
         <Book
           id={book._id}
           key={book.isbn}

@@ -95,7 +95,6 @@ export const search = (field, query, currentPage, perPage) => {
     if (!searchResponse.results.length) {
       dispatch({ type: actionTypes.STORE_RESULTS, payload: null });
     } else {
-      console.log(searchResponse);
       dispatch({
         type: actionTypes.STORE_RESULTS,
         payload: searchResponse.results,
